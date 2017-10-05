@@ -54,3 +54,4 @@ buck-out/
 
 lib/
 .idea/
+.jest/
