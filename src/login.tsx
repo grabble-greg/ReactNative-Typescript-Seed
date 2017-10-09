@@ -1,17 +1,13 @@
 import * as React from 'react';
-import {
-    Platform,
-    StyleSheet,
-    Text,
-    View
-} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 
 const instructions = Platform.select({
     ios: 'You should login using iOS!!!',
     android: 'You should login using android',
 });
 
-export default class Login extends React.Component<{}> {
+
+export default class LoginScreen extends React.Component<{}> {
     render() {
         return (
             <View style={styles.container}>

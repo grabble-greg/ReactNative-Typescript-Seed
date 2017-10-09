@@ -1,16 +1,20 @@
 import * as React from 'react';
 import {StackNavigator} from 'react-navigation';
-import Login from './login';
+import LoginScreen from './login';
+import HomeScreen from './screens/home';
+import OtherScreen from './screens/other-screen';
 
 
-const PresentsApp = StackNavigator({
-    Login: { screen: Login }
+const AppNavigator = StackNavigator({
+    // Screens
+    Home: { screen: HomeScreen},
+    Other: { screen: OtherScreen}
 });
 
 export default class App extends React.Component<{}> {
   render() {
     return (
-        <PresentsApp />
+        <AppNavigator />
     );
   }
 }

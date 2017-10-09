@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "concurrently 'npm run cli' 'npm run ios'",
+    "start": "concurrently 'npm run cli' 'npm run ios' 'npm run tsc'",
     "tsc": "./node_modules/.bin/tsc -w",
-    "cli": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
+    "cli": "node node_modules/react-native/local-cli/cli.js start",
+    "cli:when-not-working": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "ios": "./node_modules/.bin/react-native run-ios",
     "test": "jest"
   },
