@@ -1,20 +1,13 @@
 import * as React from 'react';
-import {Model} from '../models/model';
 import {Subscription} from 'rxjs/Subscription';
+import {Observable} from 'rxjs/Observable';
 
-export interface Props<TState> {
-    model: Model<TState, any>;
-}
-
-export abstract class MVIView<TState> extends React.Component<Props<TState>, TState> {
+// Base class for views. Handles subscribing and unsubscribing to the state updates and making sure redraw gets called
+export abstract class MVIView<TState> extends React.Component<{}, TState> {
     private updateSubscription: Subscription;
 
-    constructor(props?: Props<TState>, context?: any) {
-        super(props, context);
-    }
-
-    componentDidMount() {
-        this.updateSubscription = this.props.model.updates
+    subscribeTo(model$: Observable<TState>) {
+        this.updateSubscription = model$
             .subscribe((state) => {
                 this.setState(state);
             });

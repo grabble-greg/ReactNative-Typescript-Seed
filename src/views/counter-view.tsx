@@ -3,16 +3,14 @@ import {Observable} from 'rxjs/Observable';
 import {CounterState} from '../models/counter-model';
 import {Button, Text, View} from 'react-native';
 import {Subject} from 'rxjs/Subject';
-import 'rxjs/add/operator/startWith';
 import {MVIView} from './mvi-view';
 
+
+// The view. Implements one function that returns the rendering of our state
+// Also expose any streams of events you want to raise intents from
 export class CounterView extends MVIView<CounterState> {
     private incrementButtonSubject: Subject<void> = new Subject<void>();
     private decrementButtonSubject: Subject<void> = new Subject<void>();
-
-    constructor(props?: any, context?: any) {
-        super(props, context);
-    }
 
     get incrementButton(): Observable<void> {
         return this.incrementButtonSubject.asObservable();
@@ -23,7 +21,6 @@ export class CounterView extends MVIView<CounterState> {
     }
 
     redraw(state: CounterState) {
-
         if (!state) {
             return (
                 <View>

@@ -1,14 +1,12 @@
 import * as React from 'react';
 import {StackNavigator} from 'react-navigation';
-import {LoginScreen} from './login';
 import {HomeScreen} from './screens/home';
-import {OtherScreen} from './screens/other-screen';
 
-
+// General setup to have navigation between components
+// Hopefully in the future we can pass in full MVI components
 const AppNavigator = StackNavigator({
     // Screens
-    Home: { screen: HomeScreen},
-    Other: { screen: OtherScreen}
+    Home: { screen: HomeScreen}
 });
 
 export default class App extends React.Component<{}> {
