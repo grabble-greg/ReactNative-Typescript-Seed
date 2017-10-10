@@ -7,7 +7,7 @@ const instructions = Platform.select({
 });
 
 
-export default class LoginScreen extends React.Component<{}> {
+export class LoginScreen extends React.Component<{}> {
     render() {
         return (
             <View style={styles.container}>

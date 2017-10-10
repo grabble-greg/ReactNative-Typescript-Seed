@@ -5,7 +5,7 @@ import {NavigationScreenProps} from 'react-navigation';
 interface OtherScreenNavigationParams {}
 interface OtherScreenProps extends NavigationScreenProps<OtherScreenNavigationParams> {}
 
-export default class OtherScreen extends React.Component<OtherScreenProps> {
+export class OtherScreen extends React.Component<OtherScreenProps> {
     render() {
         const { navigate } = this.props.navigation;
         return (

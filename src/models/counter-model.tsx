@@ -1,16 +1,17 @@
 
-import HomeIntent from '../intents/counter-intent';
+import {CounterIntent} from '../intents/counter-intent';
 import {CounterAction} from '../constants/counter-action';
-import ActionEvent from '../action-event';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
+import {Model} from './model';
+import {SimpleAction} from '../action-payload';
 
 
 export interface CounterState {
     count: number;
 }
 
-export default class CounterModel {
+export class CounterModel implements Model<CounterState, CounterIntent> {
     private updateSubject: Subject<CounterState>;
     private currentState: CounterState;
 
@@ -25,9 +26,9 @@ export default class CounterModel {
             .startWith({count: 0} as CounterState);
     }
 
-    public observe(homeIntent: HomeIntent) {
-        homeIntent.actions.subscribe(
-            (intent: ActionEvent<CounterAction, void>) => {
+    public observe(intent: CounterIntent) {
+        intent.actions.subscribe(
+            (intent: SimpleAction<CounterAction>) => {
                 switch (intent.action) {
                     case CounterAction.Decrement:
                         this.currentState = {count: this.currentState.count - 1} as CounterState;

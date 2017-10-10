@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {StackNavigator} from 'react-navigation';
-import LoginScreen from './login';
-import HomeScreen from './screens/home';
-import OtherScreen from './screens/other-screen';
+import {LoginScreen} from './login';
+import {HomeScreen} from './screens/home';
+import {OtherScreen} from './screens/other-screen';
 
 
 const AppNavigator = StackNavigator({

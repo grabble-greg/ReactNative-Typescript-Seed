@@ -1,29 +1,30 @@
-import HomeView from '../views/counter-view';
 import {Subject} from 'rxjs/Subject';
-import ActionEvent from '../action-event';
+import {ActionPayload, SimpleAction} from '../action-payload';
 import {CounterAction} from '../constants/counter-action';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
+import {SimpleIntent} from './intent';
+import {CounterView} from '../views/counter-view';
 
 
-export default class CounterIntent {
-    private actionsSubject: Subject<ActionEvent<CounterAction, void>>;
+export class CounterIntent implements SimpleIntent<CounterView, CounterAction>{
+    private actionsSubject: Subject<SimpleAction<CounterAction>>;
 
     constructor() {
-        this.actionsSubject = new Subject<ActionEvent<CounterAction, void>>();
+        this.actionsSubject = new Subject<SimpleAction<CounterAction>>();
     }
 
-    get actions(): Observable<ActionEvent<CounterAction, void>> {
+    get actions(): Observable<ActionPayload<CounterAction, void>> {
         return this.actionsSubject.asObservable();
     }
 
-    public observe(homeView: HomeView) {
+    public observe(view: CounterView) {
         Observable.merge(
-            homeView.incrementButton.map(() => CounterAction.Increment),
-            homeView.decrementButton.map(() => CounterAction.Decrement))
+            view.incrementButton.map(() => CounterAction.Increment),
+            view.decrementButton.map(() => CounterAction.Decrement))
             .subscribe((counterAction: CounterAction) => {
-                this.actionsSubject.next(new ActionEvent<CounterAction, void>(counterAction, void 0))
+                this.actionsSubject.next(new SimpleAction<CounterAction>(counterAction))
             });
     }
 }

@@ -1,33 +1,17 @@
 import * as React from 'react';
 import {Observable} from 'rxjs/Observable';
-import {default as CounterModel, CounterState} from '../models/counter-model';
-import {Subscription} from 'rxjs/Subscription';
+import {CounterState} from '../models/counter-model';
 import {Button, Text, View} from 'react-native';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/startWith';
+import {MVIView} from './mvi-view';
 
-export interface CounterViewProps {
-    model: CounterModel;
-}
+export class CounterView extends MVIView<CounterState> {
+    private incrementButtonSubject: Subject<void> = new Subject<void>();
+    private decrementButtonSubject: Subject<void> = new Subject<void>();
 
-export default class CounterView extends React.Component<CounterViewProps, CounterState> {
-    private updateSubscription: Subscription;
-    private incrementButtonSubject: Subject<void>;
-    private decrementButtonSubject: Subject<void>;
-
-
-    componentDidMount() {
-        this.incrementButtonSubject = new Subject<void>();
-        this.decrementButtonSubject = new Subject<void>();
-
-        this.updateSubscription = this.props.model.updates
-            .subscribe((state) => {
-                this.setState(state);
-            });
-    }
-
-    componentWillUnmount() {
-        this.updateSubscription.unsubscribe();
+    constructor(props?: any, context?: any) {
+        super(props, context);
     }
 
     get incrementButton(): Observable<void> {
@@ -38,9 +22,9 @@ export default class CounterView extends React.Component<CounterViewProps, Count
         return this.decrementButtonSubject.asObservable();
     }
 
-    render() {
+    redraw(state: CounterState) {
 
-        if (!this.state) {
+        if (!state) {
             return (
                 <View>
                     <Text>Loading...</Text>
@@ -50,7 +34,7 @@ export default class CounterView extends React.Component<CounterViewProps, Count
 
         return (
             <View>
-                <Text>Total: {this.state.count}</Text>
+                <Text>Total: {state.count}</Text>
 
                 <Button onPress={() => this.incrementButtonSubject.next()} title="Increment"/>
                 <Button onPress={() => this.decrementButtonSubject.next()} title="Decrement"/>
