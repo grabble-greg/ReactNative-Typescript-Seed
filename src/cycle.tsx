@@ -1,12 +1,12 @@
 import {Model, StateReducer} from './models/model';
-import {MVIView} from './views/mvi-view';
+import {Component} from './views/mvi-view';
 import {Intent} from './intents/intent';
 import 'rxjs/add/operator/scan';
 
 // Where we link everything up
 export function cycle<TState, TEvent>(model: Model<TState, TEvent>,
-                                      view: MVIView<TState>,
-                                      intent: Intent<MVIView<TState>, TEvent>): void {
+                                      view: Component<TState, TEvent>,
+                                      intent: Intent<Component<TState, TEvent>, TEvent>): void {
 
     // Our M(I(V)) output. It returns a stream of reducer functions that can be applied to the state
     const reducers$ = model.reduce(intent.observe(view));
