@@ -32,7 +32,7 @@ export default class HomeScreen extends React.Component<HomeScreenProps> {
         const { navigate } = this.props.navigation;
 
         return (
-            <CounterView updates={this.counterModel.updates} ref="counterView" />
+            <CounterView model={this.counterModel} ref="counterView" />
         );
     }
 }

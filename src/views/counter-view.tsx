@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {Observable} from 'rxjs/Observable';
-import {CounterState} from '../models/counter-model';
+import {default as CounterModel, CounterState} from '../models/counter-model';
 import {Subscription} from 'rxjs/Subscription';
 import {Button, Text, View} from 'react-native';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/startWith';
 
-interface CounterProps {
-    updates: Observable<CounterState>;
+export interface CounterViewProps {
+    model: CounterModel;
 }
 
-export default class CounterView extends React.Component<CounterProps, CounterState> {
+export default class CounterView extends React.Component<CounterViewProps, CounterState> {
     private updateSubscription: Subscription;
     private incrementButtonSubject: Subject<void>;
     private decrementButtonSubject: Subject<void>;
@@ -20,8 +20,7 @@ export default class CounterView extends React.Component<CounterProps, CounterSt
         this.incrementButtonSubject = new Subject<void>();
         this.decrementButtonSubject = new Subject<void>();
 
-        this.updateSubscription = this.props.updates
-            .startWith({count: 0} as CounterState)
+        this.updateSubscription = this.props.model.updates
             .subscribe((state) => {
                 this.setState(state);
             });
@@ -40,7 +39,14 @@ export default class CounterView extends React.Component<CounterProps, CounterSt
     }
 
     render() {
-        console.log(this.state);
+
+        if (!this.state) {
+            return (
+                <View>
+                    <Text>Loading...</Text>
+                </View>
+            );
+        }
 
         return (
             <View>

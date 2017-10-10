@@ -20,9 +20,10 @@ export default class CounterModel {
     }
 
     get updates(): Observable<CounterState> {
-        return this.updateSubject.asObservable();
+        return this.updateSubject
+            .asObservable()
+            .startWith({count: 0} as CounterState);
     }
-
 
     public observe(homeIntent: HomeIntent) {
         homeIntent.actions.subscribe(
