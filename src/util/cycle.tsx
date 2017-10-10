@@ -1,6 +1,6 @@
-import {Model, StateReducer} from './models/model';
-import {Component} from './views/mvi-view';
-import {Intent} from './intents/intent';
+import {Model, StateReducer} from './model';
+import {Component} from './component';
+import {Intent} from './intent';
 import 'rxjs/add/operator/scan';
 
 // Where we link everything up

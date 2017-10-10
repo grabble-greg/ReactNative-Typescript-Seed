@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {CounterModel, CounterState} from '../models/counter-model';
 import {Button, Text, View} from 'react-native';
 import {Subject} from 'rxjs/Subject';
-import {Component} from './mvi-view';
+import {Component} from '../util/component';
 import {CounterAction} from '../enums/counter-action';
 import {CounterIntent} from '../intents/counter-intent';
 

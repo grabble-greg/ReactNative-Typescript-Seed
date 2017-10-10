@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
-import {Model} from '../models/model';
-import {Intent} from '../intents/intent';
-import {cycle} from '../cycle';
+import {Model} from './model';
+import {Intent} from './intent';
+import {cycle} from './cycle';
 
-// Base class for views. Handles setting up the cycle and subscribing to the state stream
+// Base class for component. Handles setting up the cycle and subscribing to the state stream
 export abstract class Component<TState, TEvent, TProps = {}> extends React.Component<TProps, TState> {
     private updateSubscription: Subscription;
 

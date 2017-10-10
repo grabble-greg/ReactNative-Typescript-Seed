@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {StackNavigator} from 'react-navigation';
-import {Counter} from './views/counter';
+import {Counter} from './component/counter';
 
 // General setup to have navigation between components
 const AppNavigator = StackNavigator({

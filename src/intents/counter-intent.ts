@@ -2,8 +2,8 @@ import {CounterAction} from '../enums/counter-action';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/map';
-import {Counter} from '../views/counter';
-import {Intent} from './intent';
+import {Counter} from '../component/counter';
+import {Intent} from '../util/intent';
 
 
 export class CounterIntent implements Intent<Counter, CounterAction> {

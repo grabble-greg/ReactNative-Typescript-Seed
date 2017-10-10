@@ -1,6 +1,6 @@
 import {CounterAction} from '../enums/counter-action';
 import {Observable} from 'rxjs/Observable';
-import {Model, StateReducer} from './model';
+import {Model, StateReducer} from '../util/model';
 import 'rxjs/add/observable/of';
 
 export interface CounterState {
