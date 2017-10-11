@@ -8,7 +8,8 @@
     "cli": "node node_modules/react-native/local-cli/cli.js start",
     "cli:when-not-working": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "ios": "./node_modules/.bin/react-native run-ios",
-    "test": "jest"
+    "test": "jest --no-cache",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "react": "^16.0.0",
@@ -44,9 +45,12 @@
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "testPathIgnorePatterns": [
       "\\.snap$",
-      "<rootDir>/node_modules/",
+      "<rootDir>/node_modules/(?!react-nativation)",
       "<rootDir>/lib/"
     ],
+    "globals": {
+      "NODE_ENV": "test"
+    },
     "cacheDirectory": ".jest/cache"
   }
 }
