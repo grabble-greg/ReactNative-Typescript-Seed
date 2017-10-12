@@ -1,8 +1,8 @@
-import {CounterAction} from '../enums/counter-action';
+import {CounterAction} from '../enums/counter.action';
 import {Observable} from 'rxjs/Observable';
 import {Model, StateReducer} from '../util/model';
 import 'rxjs/add/observable/of';
-import {CounterState} from '../states/counter-state';
+import {CounterState} from '../states/counter.state';
 
 //
 /***

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {Observable} from 'rxjs/Observable';
-import {CounterModel} from '../models/counter-model';
+import {CounterModel} from '../models/counter.model';
 import {Button, Text, View} from 'react-native';
 import {Subject} from 'rxjs/Subject';
 import {CycleComponent} from '../util/component';
-import {CounterAction} from '../enums/counter-action';
-import {CounterIntent} from '../intents/counter-intent';
-import {CounterState} from '../states/counter-state';
-import {CounterList} from './counter-list';
-import {CounterListState} from '../states/counter-list-state';
+import {CounterAction} from '../enums/counter.action';
+import {CounterIntent} from '../intents/counter.intent';
+import {CounterState} from '../states/counter.state';
+import {CounterList} from './counter-list.component';
+import {CounterListState} from '../states/counter-list.state';
 
 
 /*

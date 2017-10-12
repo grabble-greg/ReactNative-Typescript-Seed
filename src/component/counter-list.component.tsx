@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {ListView, ListViewDataSource, Text} from 'react-native';
 import {CycleComponent} from '../util/component';
-import {CounterListState} from '../states/counter-list-state';
+import {CounterListState} from '../states/counter-list.state';
 
 /***
  * A very simple component that just lists data. Takes its state from this.props.state$
