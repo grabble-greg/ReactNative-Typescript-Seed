@@ -4,7 +4,7 @@ import {CycleComponent} from '../util/component';
 import {CounterListState} from '../states/counter-list.state';
 
 /***
- * A very simple component that just lists data. Takes its state from this.props.state$
+ * A very simple components that just lists data. Takes its state from this.props.state$
  */
 export class CounterList extends CycleComponent<CounterListState> {
     private dataSource: ListViewDataSource;

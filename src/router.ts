@@ -1,6 +1,6 @@
 import {StackNavigator} from 'react-navigation';
-import {SignUp} from './component/signup.component';
-import {SignIn} from './component/signin.component';
+import {SignUp} from './components/signup.component';
+import {SignIn} from './components/signin.component';
 
 export const SignedOut = StackNavigator({
     SignUp: {

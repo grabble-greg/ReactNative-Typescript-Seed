@@ -10,7 +10,7 @@ export interface ComponentProps<TState> {
 }
 
 /***
- * Base class for component. Handles setting up the cycle and subscribing to the state$ stream
+ * Base class for components. Handles setting up the cycle and subscribing to the state$ stream
  *
  * @param {TState} The
  * @param {TEvent}

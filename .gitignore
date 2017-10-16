@@ -55,3 +55,4 @@ buck-out/
 lib/
 .idea/
 .jest/
+GoogleService-Info.plist
