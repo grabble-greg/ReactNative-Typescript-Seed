@@ -29,10 +29,10 @@ export abstract class CycleComponent<TState, TEvent = {}, TProps extends Compone
 
             // Call each reducer when it comes, passing in the output of the previous reducer. We start with void to start
             // so that we trigger the first reducer
-            const state$ = reducers$.scan((acc: TState, curr: StateReducer<TState>) => curr(acc), void 0 as (TState | undefined));
+            const state$ = reducers$.scan((acc: TState, curr: StateReducer<TState>) => curr(acc),
+                void 0 as (TState | undefined));
             this.subscribeTo(state$);
         }
-
     }
 
     protected subscribeTo(model$: Observable<TState>) {
