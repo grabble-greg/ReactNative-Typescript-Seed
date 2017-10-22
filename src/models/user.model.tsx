@@ -1,19 +1,20 @@
 import {Observable} from 'rxjs/Observable';
-import {Model, StateReducer} from '../util/model';
+import {Model, Reducer} from '../util/model';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
 import {LoginState} from '../states/login.state';
 import {LoginAction} from '../enums/login.action';
 import {GoogleSignin, User} from 'react-native-google-signin';
 
-export class LoginModel implements Model<LoginState, LoginAction> {
+export class UserModel implements Model<LoginState, LoginAction> {
 
-    public reduce(intent: Observable<LoginAction>): Observable<StateReducer<LoginState>> {
-        const initialsReducer$: Observable<StateReducer<LoginState>> = Observable.fromPromise(GoogleSignin.hasPlayServices({autoResolve: true}))
-            .mergeMap((hasPlayServices: boolean) => hasPlayServices
+    public bind(intent: Observable<LoginAction>): Observable<Reducer<LoginState>> {
+        const initialsReducer$ = Observable.fromPromise(GoogleSignin.hasPlayServices({autoResolve: true}))
+            .map((hasPlayServices: boolean) => hasPlayServices
                 ? GoogleSignin.configure({
                     iosClientId: '722901518519-t2jdrpm0u1f87kohf36ppd2f3rrilu7v.apps.googleusercontent.com',
                     webClientId: '722901518519-t2jdrpm0u1f87kohf36ppd2f3rrilu7v.apps.googleusercontent.com',
@@ -23,11 +24,10 @@ export class LoginModel implements Model<LoginState, LoginAction> {
             )
             .mergeMap(() => GoogleSignin.currentUserAsync())
             .map((user: User) => () => {
-                console.log('Im here', user);
                 return ({
                         user: user,
                         canLogin: true,
-                        loggedIn: true
+                        loggedIn: user && user.email ? true : false
                     } as LoginState
                 )
             })
@@ -37,7 +37,7 @@ export class LoginModel implements Model<LoginState, LoginAction> {
                 error: err
             } as LoginState)));
 
-        const loginReducer$: Observable<StateReducer<LoginState>> = intent.map(
+        const loginReducer$: Observable<Reducer<LoginState>> = intent.map(
             (intent: LoginAction) => {
                 switch (intent) {
                     case LoginAction.Signup:

@@ -1,13 +1,22 @@
 import * as React from 'react';
 import {Subscription} from 'rxjs/Subscription';
 import {Observable} from 'rxjs/Observable';
-import {Model, StateReducer} from './model';
-import {Intent} from './intent';
+import {Reducer} from './model';
 import 'rxjs/add/operator/scan';
+import 'rxjs/add/operator/share';
+import {Subject} from 'rxjs/Subject';
 
-export interface ComponentProps<TState> {
+
+export interface Sources<TState, TSources = {}> {
     state$: Observable<TState>;
-}
+    given: TSources;
+};
+
+export type Sinks<TState, TSinks = {}> = TSinks & {
+    reducer$: Observable<Reducer<TState>>;
+    DOM$: Observable<JSX.Element>;
+};
+
 
 /***
  * Base class for components. Handles setting up the cycle and subscribing to the state$ stream
@@ -16,40 +25,56 @@ export interface ComponentProps<TState> {
  * @param {TEvent}
  * @param TProps extends ComponentProps<TState> = ComponentProps<TState>}
  */
-export abstract class CycleComponent<TState, TEvent = {}, TProps extends ComponentProps<TState> = ComponentProps<TState>> extends React.Component<TProps, TState> {
-    private updateSubscription: Subscription;
-    protected state$: Observable<TState>;
+export abstract class CycleComponent<TState,
+    TSources = {},
+    TSinks = {}>
+    extends React.Component<TSources, JSX.Element> {
 
-    protected cycle(model: Model<TState, TEvent>,
-                    intent: Intent<CycleComponent<TState, TEvent>, TEvent> | undefined): void {
+    private reducerSub: Subscription;
+    private domSub: Subscription;
 
-        if (intent) {
-            // Our M(I(V)) output. It returns a stream of reducer functions that can be applied to the state$
-            const reducers$ = model.reduce(intent.observe(this));
+    protected abstract readonly componentName: string;
 
-            // Call each reducer when it comes, passing in the output of the previous reducer. We start with void to start
-            // so that we trigger the first reducer
-            const state$ = reducers$.scan((acc: TState, curr: StateReducer<TState>) => curr(acc),
-                void 0 as (TState | undefined));
-            this.subscribeTo(state$);
+    componentDidMount() {
+        // We have a chicken and egg problem here where we need to return an observable for the state stream
+        // before we have been able to create it
+        const reducer$ = new Subject<Reducer<TState>>();
+
+        // HERE this needs to be hot!!!
+        const state$ = reducer$.asObservable()
+            .scan((acc: TState, curr: Reducer<TState>) => {
+                    return curr(acc)
+                }, void 0 as (TState | undefined)
+            ).share();
+
+        const sources: Sources<TState, TSources> = {
+            state$: state$,
+            given: this.props
+        };
+
+        const sinks = this.main(sources);
+
+        this.domSub = sinks.DOM$.subscribe(
+            (elements: JSX.Element) => this.setState(elements)
+        );
+
+        if (sinks.reducer$) {
+            this.reducerSub = sinks.reducer$.subscribe(
+                (next) => reducer$.next(next),
+                (error) => reducer$.error(error),
+                () => reducer$.complete()
+            );
         }
     }
 
-    protected subscribeTo(model$: Observable<TState>) {
-        this.state$ = model$;
-        this.updateSubscription = model$
-            .subscribe((state) => {
-                this.setState(state);
-            });
+    render() {
+        return this.state;
     }
 
     componentWillUnmount() {
-        this.updateSubscription.unsubscribe();
+        this.reducerSub.unsubscribe();
+        this.domSub.unsubscribe();
     }
 
-    render() {
-        return this.redraw(this.state);
-    }
-
-    abstract redraw(state: TState): JSX.Element | null | false;
+    abstract main(sources: Sources<TState, TSources>): Sinks<TState, TSinks>;
 }

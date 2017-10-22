@@ -209,9 +209,9 @@ array-map@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/array-map/-/array-map-0.0.0.tgz#88a2bab73d1cf7bcd5c1b118a003f66f665fa662"
 
-array-reduce@~0.0.0:
+array-bind@~0.0.0:
   version "0.0.0"
-  resolved "https://registry.yarnpkg.com/array-reduce/-/array-reduce-0.0.0.tgz#173899d3ffd1c7d9383e4479525dbe278cab5f2b"
+  resolved "https://registry.yarnpkg.com/array-bind/-/array-bind-0.0.0.tgz#173899d3ffd1c7d9383e4479525dbe278cab5f2b"
 
 array-uniq@^1.0.2:
   version "1.0.3"
@@ -4064,7 +4064,7 @@ shell-quote@1.6.1, shell-quote@^1.6.1:
   dependencies:
     array-filter "~0.0.0"
     array-map "~0.0.0"
-    array-reduce "~0.0.0"
+    array-bind "~0.0.0"
     jsonify "~0.0.0"
 
 shellwords@^0.1.0:

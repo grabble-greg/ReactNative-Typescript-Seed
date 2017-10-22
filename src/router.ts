@@ -1,16 +1,10 @@
 import {StackNavigator} from 'react-navigation';
-import {SignUpComponent} from './components/signup.component';
-import {SignIn} from './components/signin.component';
+import {CounterComponent} from './components/counter.component';
+// import {SignInComponent} from './components/signin.component';
 
 export const SignedOut = StackNavigator({
-    SignUp: {
-        screen: SignUpComponent,
-        navigationOptions: {
-            title: "Sign Up"
-        }
-    },
     SignIn: {
-        screen: SignIn,
+        screen: CounterComponent,
         navigationOptions: {
             title: "Sign In"
         }
