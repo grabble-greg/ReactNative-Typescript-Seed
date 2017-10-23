@@ -43,7 +43,7 @@ export class CounterTableComponent extends CycleComponent<CounterSumState, Count
         } as CounterSumState));
 
         // We're reducing state here instead of intents
-        const reducer$: Observable<Reducer<CounterSumState>> = sources.given.count$
+        const reducer$: Observable<Reducer<CounterSumState>> = sources.count$
             .map((count: number) => (prev: CounterSumState) => ({
                 changes: [...prev.changes, count],
                 total: prev.total + count

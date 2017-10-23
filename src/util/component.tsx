@@ -7,10 +7,8 @@ import 'rxjs/add/operator/share';
 import {Subject} from 'rxjs/Subject';
 
 
-export interface Sources<TState, TSources = {}> {
+export type Sources<TState, TSources = {}> = TSources & {
     state$: Observable<TState>;
-    // TODO: After typescript 1.7 comes out, use a type union to make rather than a given field
-    given: TSources;
 };
 
 export type Sinks<TState, TSinks = {}> = TSinks & {
@@ -47,10 +45,16 @@ export abstract class CycleComponent<TState,
                 }, void 0 as (TState | undefined)
             ).share();
 
-        const sources: Sources<TState, TSources> = {
-            state$: state$,
-            given: this.props
+        // TODO: Use spread operator after typescript 1.7 supports it
+        const sources: any = {
+            state$: state$
         };
+
+        for (const prop in this.props) {
+            if (!sources[prop]) {
+                sources[prop] = this.props[prop];
+            }
+        }
 
         const sinks = this.main(sources);
 
