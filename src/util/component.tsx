@@ -9,6 +9,7 @@ import {Subject} from 'rxjs/Subject';
 
 export interface Sources<TState, TSources = {}> {
     state$: Observable<TState>;
+    // TODO: After typescript 1.7 comes out, use a type union to make rather than a given field
     given: TSources;
 };
 
@@ -16,7 +17,6 @@ export type Sinks<TState, TSinks = {}> = TSinks & {
     reducer$: Observable<Reducer<TState>>;
     DOM$: Observable<JSX.Element>;
 };
-
 
 /***
  * Base class for components. Handles setting up the cycle and subscribing to the state$ stream
