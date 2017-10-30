@@ -1,38 +1,25 @@
 // import * as React from 'react';
 // import {StyleSheet, TouchableOpacity, View} from 'react-native';
-// import {ComponentProps, CycleComponent} from '../util/component';
+// import {CycleComponent, Sinks, Sources} from '../util/component';
 // import {Button, Card, Text} from 'react-native-elements';
 // import {NavigationScreenProps} from 'react-navigation';
 // import {GoogleSigninButton} from 'react-native-google-signin';
-// import {LoginState} from '../states/login.state';
 // import {Subject} from 'rxjs/Subject';
 // import {Observable} from 'rxjs/Observable';
-// import {LoginAction} from '../enums/login.action';
-// import {UserModel} from '../models/user.model';
-// import {LoginIntent} from '../intents/login.intent';
 //
-//
-// interface SignInProps extends NavigationScreenProps<{}>, ComponentProps<LoginState> {
+// interface SignInProps extends NavigationScreenProps<{}> {
 // }
 //
-// export class SignInComponent extends CycleComponent<LoginState, LoginAction, SignInProps> {
-//     private signinButtonSubject = new Subject<void>();
+// interface LoginState {
+//     hasGooglePlayServices: boolean;
+//     isLoggedIn: boolean;
+//     user?: any;
+//     error?: any;
+// }
 //
-//     componentDidMount() {
-//         const model = new UserModel();
-//         const intent = new LoginIntent();
-//         this.cycle(model, intent);
-//     }
+// export class LoginComponent extends CycleComponent<LoginState, SignInProps> {
 //
-//     get signinButton$(): Observable<void> {
-//         return this.signinButtonSubject.asObservable();
-//     }
-//
-//     get signoutButton$(): Observable<void> {
-//         return this.signinButtonSubject.asObservable();
-//     }
-//
-//     redraw(state: LoginState): false | JSX.Element | null {
+//     main(sources: Sources<LoginState>): Sinks<LoginState> {
 //         const navigation = this.props.navigation;
 //
 //         if (!state) {
@@ -70,8 +57,6 @@
 //             )
 //         }
 //     }
-//
-//
 // }
 //
 // const styles = StyleSheet.create({

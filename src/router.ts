@@ -1,12 +1,15 @@
 import {StackNavigator} from 'react-navigation';
 import {CounterComponent} from './components/counter.component';
-// import {SignInComponent} from './components/signin.component';
+// import {LoginComponent} from './components/login.component';
 
 export const SignedOut = StackNavigator({
-    SignIn: {
+    Counter: {
         screen: CounterComponent,
-        navigationOptions: {
-            title: "Sign In"
-        }
-    }
+    },
+    // SignIn: {
+    //     screen: LoginComponent,
+    //     navigationOptions: {
+    //         title: 'Sign In'
+    //     }
+    // }
 });

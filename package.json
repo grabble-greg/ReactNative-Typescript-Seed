@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "concurrently 'npm run cli:when-not-working' 'npm run ios' 'npm run tsc'",
+    "start": "concurrently 'npm run cli' 'npm run ios' 'npm run tsc'",
     "tsc": "./node_modules/.bin/tsc -w",
     "cli": "node node_modules/react-native/local-cli/cli.js start",
     "cli:when-not-working": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
@@ -12,9 +12,9 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@types/react-native-google-signin": "^0.12.0",
+    "prop-types": "^15.6.0",
     "react": "^16.0.0",
-    "react-native": "^0.49.1",
+    "react-native": "^0.49.5",
     "react-native-elements": "^0.17.0",
     "react-native-google-signin": "^0.12.0",
     "react-native-vector-icons": "^4.4.2",
@@ -26,9 +26,12 @@
     "@types/react": "^16.0.9",
     "@types/react-native": "^0.49.0",
     "@types/react-native-elements": "^0.16.0",
+    "@types/react-native-google-signin": "^0.12.0",
     "@types/react-navigation": "^1.0.20",
     "@types/react-test-renderer": "^15.5.4",
+    "babel-core": "^6.26.0",
     "babel-jest": "21.2.0",
+    "babel-preset-es2015": "^6.24.1",
     "babel-preset-react-native": "4.0.0",
     "concurrently": "^3.5.0",
     "jest": "21.2.1",
@@ -56,6 +59,7 @@
     "globals": {
       "NODE_ENV": "test"
     },
-    "cacheDirectory": ".jest/cache"
+    "cacheDirectory": ".jest/cache",
+    "setupTestFrameworkScriptFile": "<rootDir>/test/setup.js"
   }
 }

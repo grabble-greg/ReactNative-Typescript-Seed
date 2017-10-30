@@ -9,7 +9,6 @@ import 'rxjs/add/observable/merge';
 import {Button, Text} from 'react-native-elements';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
-import {Reducer} from '../util/model';
 import {CounterTableComponent} from './counter-table.component';
 
 export interface CounterState {
@@ -23,8 +22,6 @@ export enum CounterIntent {
 
 export class CounterComponent extends CycleComponent<CounterState> {
 
-    protected readonly componentName = 'CounterComponent';
-
     main(sources: Sources<CounterState>): Sinks<CounterState> {
         const intentSub = new Subject<CounterIntent>();
 
@@ -32,7 +29,6 @@ export class CounterComponent extends CycleComponent<CounterState> {
             .map((state) => (
                 <View style={styles.container}>
                     <Text>{state.amount}</Text>
-
                     <Button title="Increment" onPress={() => intentSub.next(CounterIntent.Increment)} />
                     <Button title="Decrement" onPress={() => intentSub.next(CounterIntent.Decrement)} />
 
@@ -44,7 +40,7 @@ export class CounterComponent extends CycleComponent<CounterState> {
             amount: 0
         } as CounterState));
 
-        const reducer$: Observable<Reducer<CounterState>> = intentSub.asObservable()
+        const reducer$ = intentSub.asObservable()
             .map(intent => {
                 switch (intent) {
                     case CounterIntent.Increment:

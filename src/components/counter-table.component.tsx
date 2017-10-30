@@ -25,7 +25,7 @@ export class CounterTableComponent extends CycleComponent<CounterSumState, Count
 
     protected readonly componentName = 'CounterTableComponent';
 
-    main(sources: Sources<CounterSumState, CounterTableSources>): Sinks<CounterSumState> {
+    main(sources: Sources<CounterSumState>): Sinks<CounterSumState> {
         const count$ = sources.state$
             .map((state) => (
                 <View style={styles.container}>
@@ -43,7 +43,7 @@ export class CounterTableComponent extends CycleComponent<CounterSumState, Count
         } as CounterSumState));
 
         // We're reducing state here instead of intents
-        const reducer$: Observable<Reducer<CounterSumState>> = sources.count$
+        const reducer$: Observable<Reducer<CounterSumState>> = this.props.count$
             .map((count: number) => (prev: CounterSumState) => ({
                 changes: [...prev.changes, count],
                 total: prev.total + count
